@@ -1,0 +1,52 @@
+services:
+  # Equivalent to: yolo-notebook-dev (Pod/Service)
+  yolo-notebook-dev:
+    build: 
+      context: ./notebook
+    pull_policy: always
+    ports:
+      - "30888:5000"
+    environment:
+      - VERIFICATION_SERVER_UNTARGETED=http://workshop-yolo-l2-verification:5000/verify
+      - VERIFICATION_SERVER_TARGETED=http://workshop-yolo-l2-target-verification:5000/verify
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 2G
+        reservations:
+          cpus: '2.0'
+          memory: 1G
+
+  # Equivalent to: workshop-yolo-l2-verification (Deployment/Service)
+  workshop-yolo-l2-verification:
+    build: 
+      context: ./verification
+    pull_policy: always
+    environment:
+      - L2_THRESHOLD=50.0
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  # Equivalent to: workshop-yolo-l2-target-verification (Deployment/Service)
+  workshop-yolo-l2-target-verification:
+    build: 
+      context: ./verification
+    pull_policy: always
+    environment:
+      - L2_THRESHOLD=50.0
+      - TARGET_CLASS=gibbon
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M

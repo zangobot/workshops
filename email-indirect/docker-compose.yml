@@ -1,0 +1,39 @@
+services:
+  # Equivalent to: email-client-dev (Pod/Service)
+  email-client-dev:
+    build:
+      context: ./service
+    image: workshop-email-indirect-user:local
+    ports:
+      - "30050:5000"  # Web UI access
+      - "25:25"       # SMTP access
+    environment:
+      - CHALLENGE_SERVER_HOST=email-service
+      - CHALLENGE_SERVER_PORT=2525
+      - MY_LISTEN_PORT=25
+      - WEB_PORT=5000
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  # Equivalent to: email-service (Deployment/Service)
+  email-service:
+    build:
+      context: ./service
+    image: workshop-email-indirect-service:local
+    environment:
+      - LISTEN_PORT=2525
+      - VLLM_URL=http://llm-services.local/v1/chat/completions
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
