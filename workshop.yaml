@@ -298,6 +298,12 @@ data:
         port: 8080
         env:
           PORT: "8080"
+      - name: "adv-exemples"
+        image: "ghcr.io/nbhdai/adv-exemples-notebook:v0.1.0"
+        description: "Adversarial EXEmples: evading AI-based Windows antivirus programs"
+        port: 5000
+        env:
+          BASE_URL: "advexemples"
 
     workshop_namespace: "workshop"
     workshop_ttl_seconds: 3600
