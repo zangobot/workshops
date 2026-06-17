@@ -41,7 +41,7 @@ RUN chown -R player:player /workspace
 
 USER player
 
-EXPOSE 5000
+EXPOSE 5555
 
 CMD ["sh", "-c", "exec jupyter notebook \
     --ip=0.0.0.0 \

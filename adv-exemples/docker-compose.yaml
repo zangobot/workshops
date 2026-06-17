@@ -22,11 +22,6 @@ services:
       ZOO_DIR: "/workspace/theZoo/malware/Binaries"
       MALWARE_SAMPLES: "/workspace/malware_samples"
 
-    shm_size: "2gb"
-
-    tmpfs:
-      - /tmp:size=1g
-
     cap_drop:
       - ALL
 
