@@ -1,0 +1,43 @@
+name: adv-exemples
+
+services:
+  malware-detection:
+    build:
+      context: ./notebooks
+      dockerfile: Dockerfile
+
+    image: adv-exemples-malware-detection:local
+    container_name: adv-exemples-malware-detection
+
+    restart: unless-stopped
+    init: true
+
+    ports:
+      - "127.0.0.1:30888:5555"
+
+    environment:
+      BASE_URL: "/advexemples"
+      ZIP_PASSWORD: "infected"
+      WORKSPACE: "/workspace"
+      ZOO_DIR: "/workspace/theZoo/malware/Binaries"
+      MALWARE_SAMPLES: "/workspace/malware_samples"
+
+    shm_size: "2gb"
+
+    tmpfs:
+      - /tmp:size=1g
+
+    cap_drop:
+      - ALL
+
+    security_opt:
+      - no-new-privileges:true
+
+    deploy:
+      resources:
+        limits:
+          cpus: "4.0"
+          memory: 8G
+        reservations:
+          cpus: "2.0"
+          memory: 4G

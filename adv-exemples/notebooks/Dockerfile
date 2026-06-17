@@ -42,14 +42,6 @@ RUN chown -R player:player /workspace
 USER player
 
 EXPOSE 5000
-#
-#CMD ["sh", "-c", "exec jupyter notebook \
-#    --ip=0.0.0.0 \
-#    --port=5000 \
-#    --no-browser \
-#    --NotebookApp.token= \
-#    --NotebookApp.password= \
-#    --NotebookApp.base_url=\"advexemples\""]
 
 CMD ["sh", "-c", "exec jupyter notebook \
     --ip=0.0.0.0 \
